@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+
+
 public class Tree <T extends Comparable<T>> {
     private Node<T> root;
     private int size;
@@ -5,9 +8,11 @@ public class Tree <T extends Comparable<T>> {
     public Tree() {
         this.root = null;
     }
+
     public boolean isEmpty() {
         return root == null;
     }
+
     public void insert(T data) {
         if (isEmpty()) {
             root = new Node<>(data);
@@ -18,6 +23,7 @@ public class Tree <T extends Comparable<T>> {
             }
         }
     }
+
     public int getHeight(Node<T> node) {
         if (node == null) {
             return -1;
@@ -69,4 +75,84 @@ public class Tree <T extends Comparable<T>> {
         return getLevel(node.getRight(), data, level + 1);
     }
 
+    public int countLeaf(Node<T> node) {
+        if (node == null) {
+            return 0;
+        }
+        if (node.getLeft() == null && node.getRight() == null) {
+            return 1;
+        }
+        return countLeaf(node.getLeft()) + countLeaf(node.getRight());
+    }
+
+    public Node<T> getMinor(Node<T> node) {
+        if (node.getLeft() == null) {
+            return node;
+        }
+        return getMinor(node.getLeft());
+    }
+
+    public void printBreadth(T data1, T data2) {
+        if (data1.equals(data2)) {
+            System.out.print(data1);
+        }
+        int comparision = data1.compareTo(root.getValue());
+
+        Node<T> aux = search(data2);
+        if (aux != null) {
+            if (comparision == 0) {
+                int cmparision2 = data2.compareTo(root.getValue());
+                if (cmparision2 < 0) {
+                    findPath(root.getLeft(), data2);
+                } else if (cmparision2 > 0) {
+                    findPath(root.getRight(), data2);
+                }
+            } else if (comparision < 0) {
+                findPath(root.getLeft(), data1);
+                findPath(root, data2);
+            } else if (comparision > 0) {
+                findPath(root.getRight(), data1);
+                findPath(root, data2);
+            }
+        }
+    }
+
+    public Node<T> search(T data) {
+        return root.search(root, data);
+    }
+
+    public void findPath(Node<T> node, T data) {
+        if (node != null) {
+            if (node.getValue().equals(data)) {
+                System.out.print(node.getValue() + " ");
+                return;
+            }
+            if (data.compareTo(node.getValue()) < 0) {
+                findPathReverse(node.getLeft(), data);
+                System.out.print(node.getValue() + " ");
+            } else if (data.compareTo(node.getValue()) > 0) {
+                System.out.print(node.getValue() + " ");
+                findPath(node.getRight(), data);
+            }
+        }
+    }
+    public void findPathReverse(Node<T> node, T data) {
+        if (node != null) {
+            if (node.getValue().equals(data)) {
+                System.out.print(node.getValue() + " ");
+                return;
+            }
+
+            if (data.compareTo(node.getValue()) < 0) {
+                findPathReverse(node.getLeft(), data);
+            } else if (data.compareTo(node.getValue()) > 0) {
+                findPathReverse(node.getRight(), data);
+            }
+
+            System.out.print(node.getValue() + " ");
+        }
+    }
 }
+
+
+

@@ -57,28 +57,22 @@
             }
         }
 
-        public boolean search(Node<T> nod, T data){
+        public Node<T> search(Node<T> nod, T data){
             int comparison = data.compareTo(nod.getValue());
             if(comparison < 0) {
                 if(nod.getLeft() != null) {
                     return search(nod.getLeft(), data);
-                }
-                else {
-                    return false;
                 }
             }
             else if(comparison > 0) {
                 if(nod.getRight() != null) {
                     return search(nod.getRight(), data);
                 }
-                else {
-                    return false;
-                }
             }
             else if(comparison == 0) {
-                return true;
+                return nod;
             }
-            return false;
+            return null;
         }
 
 
