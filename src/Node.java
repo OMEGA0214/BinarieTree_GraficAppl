@@ -57,29 +57,6 @@
             }
         }
 
-        public void runInOrder(Node<T> node) {
-            if (node != null) {
-                runInOrder(node.getLeft());
-                System.out.print(node.getValue() + " ");
-                runInOrder(node.getRight());
-            }
-        }
-
-        public void runPreOrder(Node<T> node) {
-            if (node != null) {
-                System.out.print(node.getValue() + " ");
-                runPreOrder(node.getLeft());
-                runPreOrder(node.getRight());
-            }
-        }
-
-        public void runPostOrder(Node<T> node) {
-            if (node != null) {
-                runPostOrder(node.getLeft());
-                runPostOrder(node.getRight());
-                System.out.print(node.getValue() + " ");
-            }
-        }
         public boolean search(Node<T> nod, T data){
             int comparison = data.compareTo(nod.getValue());
             if(comparison < 0) {
@@ -101,7 +78,7 @@
             else if(comparison == 0) {
                 return true;
             }
-            return true;
+            return false;
         }
 
 
