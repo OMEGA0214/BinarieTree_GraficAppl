@@ -161,6 +161,18 @@ public class Tree <T extends Comparable<T>> {
         }
     }
 
+    public Node<T> getMayor(Node<T> node) {
+        if (node.getRight() == null) {
+            return node;
+        }
+        return getMayor(node.getRight());
+    }
+
+    public void deleteTree(){
+        root = null;
+        size = 0;
+    }
+
 }
 
 
