@@ -136,6 +136,7 @@ public class Tree <T extends Comparable<T>> {
             }
         }
     }
+
     public void findPathReverse(Node<T> node, T data) {
         if (node != null) {
             if (node.getValue().equals(data)) {
@@ -152,6 +153,14 @@ public class Tree <T extends Comparable<T>> {
             System.out.print(node.getValue() + " ");
         }
     }
+
+    public void delete(T date) {
+        if(root.delete(root, date)){
+            size--;
+            System.out.println("Date eliminated: " + date);
+        }
+    }
+
 }
 
 
