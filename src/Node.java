@@ -33,5 +33,27 @@
         public void setRight(Node<T> right) {
             this.right = right;
         }
+    public boolean insert(Node<T> node, T data) {
+        int comparison = data.compareTo(node.getValue());
+
+        if (comparison < 0) {
+            if (node.getLeft() == null) {
+                node.setLeft(new Node<>(data));
+                return true;
+            } else {
+                return insert(node.getLeft(), data);
+            }
+        } else if (comparison > 0) {
+            if (node.getRight() == null) {
+                node.setRight(new Node<>(data));
+                return true;
+            } else {
+                return insert(node.getRight(), data);
+            }
+        } else {
+            System.out.println("Data already exists");
+            return false;
+        }
+    }
 
 }
