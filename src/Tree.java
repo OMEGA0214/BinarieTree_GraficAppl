@@ -16,7 +16,6 @@ public class Tree <T extends Comparable<T>> {
             if (root.insert(root, data)) {
                 size++;
             }
-
         }
     }
 }
