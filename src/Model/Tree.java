@@ -1,6 +1,9 @@
 package Model;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Tree <T extends Comparable<T>> {
     private Node<T> root;
     private int size;
@@ -202,6 +205,51 @@ public class Tree <T extends Comparable<T>> {
         }
         return node;
     }
+    public List<Integer> getBreadthPath(Integer data1, Integer data2) {
+        List<Integer> path = new ArrayList<>();
+
+        Node<T> common = commonNode(root, (T) data1, (T) data2);
+
+        if (common != null) {
+            collectReversePath(common.getLeft(), (T) data1, path);
+            collectPath(common, (T) data2, path);
+        }
+        return path;
+    }
+    private void collectPath(Node<T> node, T data, List<Integer> path) {
+        if (node == null) return;
+
+        path.add((Integer) node.getValue());
+
+        if (node.getValue().equals(data)) {
+            return;
+        }
+
+        if (data.compareTo(node.getValue()) < 0) {
+            collectPath(node.getLeft(), data, path);
+        } else {
+            collectPath(node.getRight(), data, path);
+        }
+    }
+    private boolean collectReversePath(Node<T> node, T data, List<Integer> path) {
+        if (node == null) return false;
+
+        if (node.getValue().equals(data)) {
+            path.add((Integer) node.getValue());
+            return true;
+        }
+        boolean found = false;
+        if (data.compareTo(node.getValue()) < 0) {
+            found = collectReversePath(node.getLeft(), data, path);
+        } else {
+            found = collectReversePath(node.getRight(), data, path);
+        }
+        if (found) {
+            path.add((Integer) node.getValue());
+        }
+        return found;
+    }
+
 }
 
 

@@ -4,7 +4,7 @@ import Model.Tree;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainFrame extends JFrame  {
+public class MainFrame extends JFrame {
     private Tree<Integer> tree;
     private TreePanel treePanel;
     private JTextField input;
@@ -31,6 +31,12 @@ public class MainFrame extends JFrame  {
         JButton leafButton = new JButton("Hojas");
         JButton clearButton = new JButton("Limpiar");
         JButton pathButton = new JButton("Camino");
+        JButton sizeButton = new JButton("Peso");
+        JButton levelButton = new JButton("Nivel");
+        JButton minorButton = new JButton("Menor");
+        JButton mayorButton = new JButton("Mayor");
+        JButton widthButton = new JButton("Amplitud");
+        JButton traversalButton = new JButton("Recorridos");
 
         topPanel.add(new JLabel("Dato 1:"));
         topPanel.add(input);
@@ -46,6 +52,12 @@ public class MainFrame extends JFrame  {
         topPanel.add(leafButton);
         topPanel.add(clearButton);
         topPanel.add(pathButton);
+        topPanel.add(sizeButton);
+        topPanel.add(levelButton);
+        topPanel.add(minorButton);
+        topPanel.add(mayorButton);
+        topPanel.add(widthButton);
+        topPanel.add(traversalButton);
 
         add(topPanel, BorderLayout.NORTH);
 
@@ -53,12 +65,11 @@ public class MainFrame extends JFrame  {
         treePanel = new TreePanel(tree);
         add(treePanel, BorderLayout.CENTER);
 
-        JScrollPane scroll = new JScrollPane(output);
-        add(scroll, BorderLayout.SOUTH);
-        // Área de resultados
+        //AREA RESULTADOS
         output = new JTextArea(8, 20);
         output.setEditable(false);
-
+        JScrollPane scroll = new JScrollPane(output);
+        add(scroll, BorderLayout.SOUTH);
         // INSERTAR
         insertButton.addActionListener(e -> {
             try {
@@ -103,13 +114,35 @@ public class MainFrame extends JFrame  {
         });
         // CAMINO ENTRE NODOS
         pathButton.addActionListener(e -> {
-            label2.setVisible(true);
-            input2.setVisible(true);
+            try {
+                // Si todavía está oculto, solo mostrarlo
+                if (!input2.isVisible()) {
+                    label2.setVisible(true);
+                    input2.setVisible(true);
 
-            topPanel.revalidate();
-            topPanel.repaint();
+                    topPanel.revalidate();
+                    topPanel.repaint();
 
-            output.append("Ingrese el segundo dato para mostrar el camino\n");
+                    output.append("Ingrese el segundo dato para mostrar el camino\n");
+                    return;
+                }
+
+                // Si ya está visible, ejecutar camino
+                int value1 = Integer.parseInt(input.getText());
+                int value2 = Integer.parseInt(input2.getText());
+
+                treePanel.setHighlightedPath(tree.getBreadthPath(value1, value2));
+
+                output.append("Camino calculado entre " + value1 + " y " + value2 + "\n");
+
+                input.setText("");
+                input2.setText("");
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Valores inválidos");
+            }
         });
     }
+
+
 }
