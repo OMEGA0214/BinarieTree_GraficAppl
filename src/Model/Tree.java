@@ -40,28 +40,34 @@ public class Tree <T extends Comparable<T>> {
         return size;
     }
 
-    public void runInOrder(Node<T> node) {
-        if (node != null) {
-            runInOrder(node.getLeft());
-            System.out.print(node.getValue() + " ");
-            runInOrder(node.getRight());
+    public String runInOrder(Node<T> node) {
+        if (node == null) {
+            return "";
         }
+
+        return runInOrder(node.getLeft()) +
+                node.getValue() + " " +
+                runInOrder(node.getRight());
     }
 
-    public void runPreOrder(Node<T> node) {
-        if (node != null) {
-            System.out.print(node.getValue() + " ");
-            runPreOrder(node.getLeft());
-            runPreOrder(node.getRight());
+    public String runPreOrder(Node<T> node) {
+        if (node == null) {
+            return "";
         }
+
+        return node.getValue() + " " +
+                runPreOrder(node.getLeft()) +
+                runPreOrder(node.getRight());
     }
 
-    public void runPostOrder(Node<T> node) {
-        if (node != null) {
-            runPostOrder(node.getLeft());
-            runPostOrder(node.getRight());
-            System.out.print(node.getValue() + " ");
+    public String runPostOrder(Node<T> node) {
+        if (node == null) {
+            return "";
         }
+
+        return runPostOrder(node.getLeft()) +
+                runPostOrder(node.getRight()) +
+                node.getValue() + " ";
     }
 
     public int getLevel(Node<T> node, T data, int level) {
@@ -178,6 +184,34 @@ public class Tree <T extends Comparable<T>> {
         return root;
     }
 
+    public int getWidth(Node<T> node) {
+        int height = getHeight(node);
+        int maxWidth = 0;
+
+        for (int i = 0; i <= height; i++) {
+            int width = getWidthLevel(node, i);
+
+            if (width > maxWidth) {
+                maxWidth = width;
+            }
+        }
+
+        return maxWidth;
+    }
+
+    private int getWidthLevel(Node<T> node, int level) {
+        if (node == null) {
+            return 0;
+        }
+
+        if (level == 0) {
+            return 1;
+        }
+
+        return getWidthLevel(node.getLeft(), level - 1) +
+                getWidthLevel(node.getRight(), level - 1);
+    }
+
     public void printTree(Node<T> node, int level) {
         if (node != null) {
 
@@ -205,6 +239,7 @@ public class Tree <T extends Comparable<T>> {
         }
         return node;
     }
+
     public List<Integer> getBreadthPath(Integer data1, Integer data2) {
         List<Integer> path = new ArrayList<>();
 
@@ -216,6 +251,7 @@ public class Tree <T extends Comparable<T>> {
         }
         return path;
     }
+
     private void collectPath(Node<T> node, T data, List<Integer> path) {
         if (node == null) return;
 
@@ -231,6 +267,7 @@ public class Tree <T extends Comparable<T>> {
             collectPath(node.getRight(), data, path);
         }
     }
+
     private boolean collectReversePath(Node<T> node, T data, List<Integer> path) {
         if (node == null) return false;
 

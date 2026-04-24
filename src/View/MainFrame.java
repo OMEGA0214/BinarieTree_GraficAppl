@@ -15,7 +15,8 @@ public class MainFrame extends JFrame {
         tree = new Tree<>();
 
         setTitle("Árbol Binario");
-        setSize(800, 600);
+        setSize(1200, 1000);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -142,7 +143,53 @@ public class MainFrame extends JFrame {
                 JOptionPane.showMessageDialog(this, "Valores inválidos");
             }
         });
+        // PESO DEL ÁRBOL
+        sizeButton.addActionListener(e -> {
+            output.append("Peso del árbol: " + tree.getSize() + "\n");
+        });
+        // NIVEL DE UN NODO
+        levelButton.addActionListener(e -> {
+            try {
+                int value = Integer.parseInt(input.getText());
+
+                int level = tree.getLevel(tree.getRoot(), value, 0);
+
+                output.append("Nivel de " + value + ": " + level + "\n");
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Valor inválido");
+            }
+        });
+        // MENOR VALOR
+        minorButton.addActionListener(e -> {
+            if (tree.getRoot() != null) {
+                output.append("Menor valor: " +
+                        tree.getMinor(tree.getRoot()).getValue() + "\n");
+            }
+        });
+        // MAYOR VALOR
+        mayorButton.addActionListener(e -> {
+            if (tree.getRoot() != null) {
+                output.append("Mayor valor: " +
+                        tree.getMayor(tree.getRoot()).getValue() + "\n");
+            }
+        });
+        // AMPLITUD DEL ÁRBOL
+        widthButton.addActionListener(e -> {
+            int width = tree.getWidth(tree.getRoot());
+            output.append("Amplitud del árbol: " + width + "\n");
+        });
+        // RECORRIDOS
+        traversalButton.addActionListener(e -> {
+            output.append("InOrder: " +
+                    tree.runInOrder(tree.getRoot()) + "\n");
+
+            output.append("PreOrder: " +
+                    tree.runPreOrder(tree.getRoot()) + "\n");
+
+            output.append("PostOrder: " +
+                    tree.runPostOrder(tree.getRoot()) + "\n");
+        });
+
     }
-
-
 }
