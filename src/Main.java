@@ -1,7 +1,9 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
+import View.MainFrame;
+
+
 public class Main {
-    public void main(String[] args) {
-        System.out.println("Hello world!");
+    public static void main(String[] args) {
+        new MainFrame().setVisible(true);
     }
 }

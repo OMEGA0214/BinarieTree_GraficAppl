@@ -1,5 +1,6 @@
+package Model;
 
-    public class Node<T extends Comparable<T>> {
+public class Node<T extends Comparable<T>> {
         private T value;
         private Node<T> left;
         private Node<T> right;
@@ -134,7 +135,7 @@
                     node.setValue(nextValue);
                 }
             }
-            return true;
+            return false;
         }
 
         public Node<T> findNext(Node<T> node) {
@@ -150,7 +151,4 @@
             Node<T> temp = node;
             return temp;
         }
-
-
-
 }

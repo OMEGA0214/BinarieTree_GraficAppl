@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+package Model;
 
 
 public class Tree <T extends Comparable<T>> {
@@ -107,13 +107,11 @@ public class Tree <T extends Comparable<T>> {
                 } else if (cmparision2 > 0) {
                     findPath(root.getRight(), data2);
                 }
-            } else if (comparision < 0) {
-                findPath(root.getLeft(), data1);
-                findPath(root, data2);
-            } else if (comparision > 0) {
-                findPath(root.getRight(), data1);
-                findPath(root, data2);
             }
+            Node <T> common = commonNode(root, data1, data2);
+
+            findPathReverse(common.getLeft(), data1);
+            findPath(common, data2);
         }
     }
 
@@ -173,6 +171,37 @@ public class Tree <T extends Comparable<T>> {
         size = 0;
     }
 
+    public Node<T> getRoot() {
+        return root;
+    }
+
+    public void printTree(Node<T> node, int level) {
+        if (node != null) {
+
+            printTree(node.getRight(), level + 1);
+
+            for (int i = 0; i < level; i++) {
+                System.out.print("    ");
+            }
+
+            System.out.println(node.getValue());
+
+            printTree(node.getLeft(), level + 1);
+        }
+    }
+
+    public Node<T> commonNode(Node<T> node, T data1, T data2) {
+        if (node == null) {
+            return null;
+        }
+        if (data1.compareTo(node.getValue()) < 0 && data2.compareTo(node.getValue()) < 0) {
+            return commonNode(node.getLeft(), data1, data2);
+        }
+        if (data1.compareTo(node.getValue()) > 0 && data2.compareTo(node.getValue()) > 0) {
+            return commonNode(node.getRight(), data1, data2);
+        }
+        return node;
+    }
 }
 
 
